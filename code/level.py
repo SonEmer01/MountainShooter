@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import sys
+from time import clock_getres
 from typing import List
 
 import pygame
@@ -9,6 +10,7 @@ from pygame.font import Font
 
 from code.entity import Entity
 from code.entityFactory import EntityFactory
+from const import COLOR_WHITE, WIN_HEIGHT
 
 
 class Level:
@@ -20,7 +22,13 @@ class Level:
         self.entity_list: List[Entity] = []
         self.entity_list.extend(EntityFactory.get_entity('Level1Bg'))
 
-    def run(self, text_size=None):
+    def level_text(self, text_size: int, text:str, text_color: tuple, text_pos: tuple):
+        text_font: Font = pygame.font.SysFont('Lucida Sans Typewriter', size=text_size)
+        text_surf: Surface = text_font.render(text, True, text_color).convert_alpha()
+        text_rect: Rect = text_surf.get_rect(left=text_pos[0], top=text_pos[1])
+        self.window.blit(source=text_surf, dest=text_rect)
+
+    def run(self):
         pygame.mixer_music.load(f'./asset/{self.name}.mp3')
         pygame.mixer_music.play(-1)
         tempo = pygame.time.Clock()
@@ -34,15 +42,8 @@ class Level:
                    pygame.quit()
                    sys.exit()
 
-            #self.level_text(text_size: 14, text: f'{self.name} - Timeout:{self.timeout / 1000:.lf }s', COLOR_WHITE, text_pos: )10,5))
+            self.level_text(text_size=14, text=f'{self.name} - Timeout: {self.timeout / 1000 :.1f}s', text_color=COLOR_WHITE, text_pos=(10, 5))
+            self.level_text(text_size=14, text=f'Fps:{tempo.get_fps() :.0f}', text_color=COLOR_WHITE, text_pos=(10, WIN_HEIGHT - 35))
+            self.level_text(text_size=14, text=f'Entidades: {len(self.entity_list)}', text_color=COLOR_WHITE, text_pos=(10, WIN_HEIGHT - 20))
 
             pygame.display.flip()
-
-
-    def level_text(self, text_size: int, text: str, text_color: tuple, text_pos: tuple):
-        text_font: Font = pygame.font.SysFont('Lucida Sans Typewriter', size=text_size)
-        text_surf: Surface = text_font.render(self.name, True, text_color).convert_alpha()
-        text_rect: Rect = text_surf.get_rect(left=text_pos[0], top=text_pos[1])
-        self.window.blit(source=text_surf, dest=text_rect)
-
-

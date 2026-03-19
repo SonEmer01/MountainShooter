@@ -6,7 +6,6 @@ from code import background
 from code.background import Background
 from const import WIN_WIDTH
 
-
 class EntityFactory:
 
     @staticmethod

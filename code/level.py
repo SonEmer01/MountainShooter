@@ -8,8 +8,8 @@ import pygame
 from pygame import Surface, Rect
 from pygame.font import Font
 
+from code import entityFactory
 from code.entity import Entity
-from code.entityFactory import EntityFactory
 from const import COLOR_WHITE, WIN_HEIGHT
 
 
@@ -20,7 +20,9 @@ class Level:
         self.name = name
         self.game_mode = game_mode
         self.entity_list: List[Entity] = []
-        self.entity_list.extend(EntityFactory.get_entity('Level1Bg'))
+        self.entity_list.extend(entityFactory.get_entity('Level1Bg'))
+        self.entity_list.append(entityFactory.get_entity('Player1'))
+
 
     def level_text(self, text_size: int, text:str, text_color: tuple, text_pos: tuple):
         text_font: Font = pygame.font.SysFont('Lucida Sans Typewriter', size=text_size)

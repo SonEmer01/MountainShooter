@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import random
 import sys
 from time import clock_getres
 from typing import List
@@ -10,7 +11,7 @@ from pygame.font import Font
 
 from code import entityFactory
 from code.entity import Entity
-from const import COLOR_WHITE, WIN_HEIGHT
+from const import COLOR_WHITE, WIN_HEIGHT, MENU_OPTION, EVENT_ENEMY, SPAWN_TIME
 
 
 class Level:
@@ -22,6 +23,9 @@ class Level:
         self.entity_list: List[Entity] = []
         self.entity_list.extend(entityFactory.get_entity('Level1Bg'))
         self.entity_list.append(entityFactory.get_entity('Player1'))
+        if game_mode in [MENU_OPTION[1], [MENU_OPTION[2]]]:
+            self.entity_list.append(entityFactory.get_entity('Player2'))
+        pygame.time.set_timer(EVENT_ENEMY, SPAWN_TIME)
 
 
     def level_text(self, text_size: int, text:str, text_color: tuple, text_pos: tuple):
@@ -43,6 +47,9 @@ class Level:
                if event.type == pygame.QUIT:
                    pygame.quit()
                    sys.exit()
+               if event.type == EVENT_ENEMY:
+                   sorteio = random.choice(('Enemy1', 'Enemy2'))
+                   self.entity_list.append(entityFactory.get_entity(sorteio))
 
             self.level_text(text_size=14, text=f'{self.name} - Timeout: {self.timeout / 1000 :.1f}s', text_color=COLOR_WHITE, text_pos=(10, 5))
             self.level_text(text_size=14, text=f'Fps:{tempo.get_fps() :.0f}', text_color=COLOR_WHITE, text_pos=(10, WIN_HEIGHT - 35))

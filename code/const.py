@@ -24,11 +24,11 @@ ENTITY_SPEED = {
     'Level2Bg3': 3,
     'Level2Bg4': 4,
     'Player1': 3,
-    'Player1Shot': 1,
+    'Player1Shot': 3,
     'Player2': 3,
     'Player2Shot': 3,
     'Enemy1': 1,
-    'Enemy1Shot': 5,
+    'Enemy1Shot': 4,
     'Enemy2': 1,
     'Enemy2Shot': 2,
 }
@@ -75,7 +75,7 @@ ENTITY_DAMAGE = {
     'Player2Shot': 20,
     'Enemy1': 1,
     'Enemy1Shot': 20,
-    'Enemy2': 1,
+    'Enemy2': 2,
     'Enemy2Shot': 15,
 }
 
@@ -129,7 +129,7 @@ PLAYER_KEY_SHOOT = {'Player1': pygame.K_RCTRL,
                     'Player2': pygame.K_LCTRL}
 
 # S
-SPAWN_TIME = 4000
+SPAWN_TIME = 2100
 
 # T
 TIMEOUT_STEP = 100  # 100ms
